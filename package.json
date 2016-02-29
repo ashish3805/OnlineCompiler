@@ -1,0 +1,31 @@
+{
+  "name": "online_compiler",
+  "version": "0.0.1",
+  "description": "compiles c codes online via linux system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashish3805/OnlineCompiler.git"
+  },
+  "keywords": [
+    "online",
+    "compiler",
+    "website",
+    "for",
+    "c",
+    "c"
+  ],
+  "author": "Devraj, Harsha, Aman, Anuradha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashish3805/OnlineCompiler/issues"
+  },
+  "homepage": "https://github.com/ashish3805/OnlineCompiler#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

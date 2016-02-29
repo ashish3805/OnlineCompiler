@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Online Judge</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<script>
+$(document).ready(function() {
+	$('#compile').click(function(){
+		$('#error-con').addClass('hidden');
+		$('#result-con').addClass('hidden');
+		var code=editor.getValue();
+		var code_data={};
+		code_data["code"]=code;
+    code_data["input"]=$('#stdin_data').val();
+		$.get('/compile',code_data,function(data){
+			//data=jQuery.parseJSON(data);
+			console.log(data);
+			if(!data['success']){
+        console.log('errors');
+				$('#error-con').removeClass('hidden');
+				$('#stderr_data').val(data['stderr']);
+			}else{
+				$('textarea#stdout_data').val(data['stdout']);
+				$('#result-con').removeClass('hidden');
+			}
+		});
+		
+	});
+});
+</script>
+</head>
+
+<body>
+<div id="container">
+  <div id="nav-top" class="row navbar">
+    <div id="logo" class="col-md-2">logo</div>
+    <ul class="nav nav-pills">
+      <li> <a href="index.html" class="white"> <span class="glyphicon glyphicon-home red"></span> Home </a> </li>
+      <li> <a href="about.html" class="white"> <span class="glyphicon glyphicon-info-sign"></span> About </a> </li>
+    </ul>
+  </div>
+  <div id="mid" class="row">
+    <div class="col-md-6">
+      <div id="code-con">
+        <div class="title">Code Editor</div>
+        <form id="inpForm">
+          <div id="editor">
+          <textarea id="inpArea"></textarea>
+          </div>
+          <script src="js/ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script> 
+          <script>
+        var editor = ace.edit("editor");
+   		editor.getSession().setMode("ace/mode/c_cpp");
+		editor.setValue("#include<stdio.h>\nint main(){\n\n}");
+    </script>
+        </form>
+        <div id="button-tray" class="row">
+          <div class="col-md-4">
+            <button type="button" class="btn btn-primary" id="compile">Compile</button>
+            <button type="button" class="btn btn-success" id="run">Run</button>
+          </div>
+          <div class="col-md-6 pull-right">Or select File,
+            <button type="button" class="btn btn-info" id="browse"> <span class="glyphicon glyphicon-file red"> </span>Browse </button>
+            here! </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div id="stdin-con" class="col-md-10">
+          <div class="title">stdin</div>
+          <textarea id="stdin_data" cols="74" class="txtArea" rows="9"></textarea>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <div class="row">
+        <div id="result-con" class="col-md-10 hidden">
+          <div class="title">stdout</div>
+          <textarea id="stdout_data" cols="74" class="txtArea" rows="9"></textarea>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <div class="row">
+        <div id="error-con" class="col-md-10 hidden">
+          <div class="title">stderr</div>
+          <textarea id="stderr_data" cols="74" class="txtArea" rows="9"></textarea>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+  </div>
+ <div id="bottom-bar" class="row navbar"></div>
+</div>
+</body>
+</html>
